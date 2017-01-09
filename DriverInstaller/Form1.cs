@@ -15,7 +15,9 @@ namespace DriverInstaller
 {
     public partial class Form1 : Form
     {
-        public string _FilepathSel, _Floderpath, _InstallerExeFile, _DeviceName, _ZipPath, _Unzipto = null;
+        static string _FilepathSel, _Floderpath, _InstallerExeFile, _DeviceName, _ZipPath, _Unzipto = null;
+        int _ReturnCode = 0;
+        static bool _MainThread = true;
         public DataTable dt;
         public string[] _StrFilter = { "wifi", "bt", "wlan", "bluetooth"};
         public BackgroundWorker backgroundWorker;
@@ -61,17 +63,28 @@ namespace DriverInstaller
             return null;
         }
         //Unzip file to folder
-        private void _UnzipFileTo(string source, string destination)
+        private string _UnzipFileTo(string source, string destination)
         {
             if (Directory.Exists(destination))
             {
                 Directory.Delete(destination, true);
             }
-            ZipFile.ExtractToDirectory(source, destination);
+
+            try
+            {
+                ZipFile.ExtractToDirectory(source, destination);
+                return "Pass";
+            }
+            
+            catch(System.IO.InvalidDataException)
+            {
+                MessageBox.Show(source +" Not able to unzip ", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return "Error";
+            }
         }
 
         //Install driver via execution file
-        private void _InstallDriver (string _ExeLocation)
+        private void _GetInstallerPath (string _ExeLocation)
         {
             if (File.Exists(_ExeLocation + "\\setup.exe"))
             {
@@ -93,24 +106,134 @@ namespace DriverInstaller
                 }
                 while (_InstallerExeFile == null);
             }
-            label_ProcessStatus.Text = "Installing " + _DeviceName + " driver";
-            MessageBox.Show(_InstallerExeFile);
-            //Process.Start(_InstallerExeFile, "/?");
         }
 
         //Hide button and lab while working
-        private void _BadUserDefander()
+        private void _BadUserDefander(bool _switch)
         {
-            btn_add.Visible = !btn_add.Visible;
-            btn_sel.Visible = !btn_sel.Visible;
-            btn_Start.Visible = !btn_Start.Visible;
-            lab_ReadMe.Visible = !lab_ReadMe.Visible;
-            text_FilePatSel.Visible = !text_FilePatSel.Visible;
-            pictureBox_processing.Visible = !pictureBox_processing.Visible;
-            label_ProcessStatus.Visible = !label_ProcessStatus.Visible;
-            label_ProcessStatus.Text = "Unzipping " + _DeviceName + " driver";
+             btn_add.Visible = !_switch;
+             btn_sel.Visible = !_switch;
+             btn_Start.Visible = !_switch;
+             lab_ReadMe.Visible = !_switch;
+             text_FilePatSel.Visible = !_switch;
+             pictureBox_processing.Visible = _switch;
+             label_ProcessStatus.Visible = _switch;
         }
-        //------ Button Event ------ 
+
+        //Check Return Code
+        private string _ReturnCodeCheck(int _ReturnCode)
+        {
+            if (_ReturnCode == 0)
+            {
+                return "Sucess";
+            }
+
+            else
+            {
+                return "Fail!! ReturnCode:" + _ReturnCode;
+            }
+        }
+
+        //Save result to report
+        private void _SaveResult(string device, string status)
+        {
+            Label[] lbl = new Label[3];
+
+                lbl[i] = new Label();
+                this.Controls.Add(lbl[i]);
+                lbl[i].Text = "■";
+                lbl[i].Location = new Point(n, 0);
+
+
+        public void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            backgroundWorker.ReportProgress(0);
+            while (dataGridView1.RowCount != 0)
+            {
+                try
+                {
+                    _DeviceName = dataGridView1.Rows[0].Cells[0].Value.ToString();
+                    _ZipPath = dataGridView1.Rows[0].Cells[1].Value.ToString();
+                    _Unzipto = Path.GetDirectoryName(_ZipPath) + "\\" + Path.GetFileNameWithoutExtension(_ZipPath);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    MessageBox.Show("The list is empty!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                _MainThread = true;
+                backgroundWorker.ReportProgress(1);
+                while (_MainThread == true);
+
+                //Stop installer if unzip failed
+                if (_UnzipFileTo(_ZipPath, _Unzipto) == "Error")
+                {
+                    return;
+                }
+                _MainThread = true;
+                backgroundWorker.ReportProgress(2);
+                while (_MainThread == true);
+
+                _MainThread = true;
+                backgroundWorker.ReportProgress(3);
+                while (_MainThread == true);
+
+                Process _installer = Process.Start(_InstallerExeFile);
+                _installer.WaitForExit();
+                _ReturnCode = _installer.ExitCode;
+                _InstallerExeFile = null;
+                _MainThread = true;
+                backgroundWorker.ReportProgress(4);
+                while (_MainThread == true);
+            }
+
+        }
+
+        private void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            if (e.ProgressPercentage == 1)
+            {
+                _BadUserDefander(true);
+                label_ProcessStatus.Text = "Unzipping " + _DeviceName + " driver";
+                _MainThread = false;
+            }
+
+            else if (e.ProgressPercentage == 2)
+            {
+                _GetInstallerPath(_Unzipto);
+                _MainThread = false;
+                label_ProcessStatus.Text = "Installing " + _DeviceName + " driver";
+            }
+
+            else if (e.ProgressPercentage == 3)
+            {
+                _BadUserDefander(true);
+                _MainThread = false;
+            }
+
+            else if (e.ProgressPercentage == 4)
+            {
+                _SaveResult(_ReturnCodeCheck(_ReturnCode), _DeviceName);
+                dataGridView1.Rows.RemoveAt(0);
+                _MainThread = false;
+            }
+        }
+
+
+
+        void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            _BadUserDefander(false);
+            _MainThread = true;
+        }
+
+
+
+        //||==========================||
+        //||==========================||
+        //||------ Button Event ------||
+        //||==========================||
+        //||==========================||
 
         //Select zip file(Select Button)
         private void btn_sel_Click(object sender, EventArgs e)
@@ -121,7 +244,6 @@ namespace DriverInstaller
                 _FilepathSel = _FilepathSel.ToLower();
                 text_FilePatSel.Text = _FilepathSel;
             }
-            
         }
         
         //Delete driver in list(Datagrid Delete Button)
@@ -154,35 +276,9 @@ namespace DriverInstaller
         //Start to install(Start Button)
         private void btn_Start_Click(object sender, EventArgs e)
         {
-            backgroundWorker.WorkerReportsProgress = true;
-            backgroundWorker.RunWorkerAsync();
-        }
-
-        public void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            backgroundWorker.ReportProgress(0);
-            try
-            {
-                _DeviceName = dataGridView1.Rows[0].Cells[0].Value.ToString();
-                _ZipPath = dataGridView1.Rows[0].Cells[1].Value.ToString();
-                _Unzipto = Path.GetDirectoryName(_ZipPath) + "\\" + Path.GetFileNameWithoutExtension(_ZipPath);
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                MessageBox.Show("The list is empty!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            _UnzipFileTo(_ZipPath, _Unzipto);
-            _InstallDriver(_Unzipto);
-        }
-
-        private void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            _BadUserDefander();
-        }
-        void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            _BadUserDefander();
+                    backgroundWorker.WorkerReportsProgress = true;
+                    _MainThread = false;
+                    backgroundWorker.RunWorkerAsync();
         }
     }
 }

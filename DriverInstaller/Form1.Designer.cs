@@ -91,7 +91,7 @@
             this.Item_Dev,
             this.Item_Path,
             this.Item_Del});
-            this.dataGridView1.Location = new System.Drawing.Point(9, 117);
+            this.dataGridView1.Location = new System.Drawing.Point(9, 130);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(463, 150);
             this.dataGridView1.TabIndex = 3;
@@ -120,7 +120,7 @@
             // btn_Start
             // 
             this.btn_Start.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Start.Location = new System.Drawing.Point(394, 277);
+            this.btn_Start.Location = new System.Drawing.Point(396, 284);
             this.btn_Start.Name = "btn_Start";
             this.btn_Start.Size = new System.Drawing.Size(75, 23);
             this.btn_Start.TabIndex = 4;
@@ -141,18 +141,19 @@
             // 
             // label_ProcessStatus
             // 
-            this.label_ProcessStatus.AutoSize = true;
-            this.label_ProcessStatus.Location = new System.Drawing.Point(193, 90);
+            this.label_ProcessStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_ProcessStatus.Location = new System.Drawing.Point(111, 87);
             this.label_ProcessStatus.Name = "label_ProcessStatus";
-            this.label_ProcessStatus.Size = new System.Drawing.Size(0, 13);
+            this.label_ProcessStatus.Size = new System.Drawing.Size(262, 24);
             this.label_ProcessStatus.TabIndex = 5;
+            this.label_ProcessStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label_ProcessStatus.Visible = false;
             // 
             // label_List
             // 
             this.label_List.AutoSize = true;
             this.label_List.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_List.Location = new System.Drawing.Point(12, 97);
+            this.label_List.Location = new System.Drawing.Point(12, 110);
             this.label_List.Name = "label_List";
             this.label_List.Size = new System.Drawing.Size(93, 17);
             this.label_List.TabIndex = 6;
