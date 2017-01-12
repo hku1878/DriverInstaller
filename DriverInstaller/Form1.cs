@@ -13,35 +13,24 @@ using System.Windows.Forms;
 
 namespace DriverInstaller
 {
+
     public partial class Form1 : Form
     {
         static string _FilepathSel, _Floderpath, _InstallerExeFile, _DeviceName, _ZipPath, _Unzipto = null;
         int _ReturnCode = 0;
         static bool _MainThread = true;
-        public DataTable dt;
-        public string[] _StrFilter = { "wifi", "bt", "wlan", "bluetooth"};
+        public string[] _StrFilter = { "wifi", "bt", "wlan", "bluetooth", "intel", "nv", "nvidia"};
         public BackgroundWorker backgroundWorker;
-        //Initia
         Form2 _ResultForm = new Form2();
         public Form1()
         {
             InitializeComponent();
-            dataGridView1.Columns[0].SortMode = DataGridViewColumnSortMode.NotSortable;
-            dataGridView1.Columns[1].SortMode = DataGridViewColumnSortMode.NotSortable;
-            //Create Data table
-            dt = new DataTable("Driverlist");
-            dt.Columns.Add("ItemNumber", typeof(Byte));
-            dt.Columns.Add("DriverPath", typeof(String));
-            //Arrange file path length
-            dt.Columns["ItemNumber"].Unique = true;
-            dt.Columns["DriverPath"].MaxLength = 1000;
-            dt.Columns["DriverPath"].AllowDBNull = false;
-
             backgroundWorker = new BackgroundWorker();
             backgroundWorker.DoWork += backgroundWorker_DoWork;
             backgroundWorker.ProgressChanged += backgroundWorker_ProgressChanged;
             backgroundWorker.RunWorkerCompleted += backgroundWorker_RunWorkerCompleted;
         }
+        
         //Get Zip File Path function
         private string _GetFilePath(string _FilterType, string _InitialDirectory)
         {
@@ -122,6 +111,7 @@ namespace DriverInstaller
              text_FilePatSel.Visible = !_switch;
              pictureBox_processing.Visible = _switch;
              label_ProcessStatus.Visible = _switch;
+             dataGridView1.Columns["Item_Del"].Visible = !_switch;
         }
 
         //Check Return Code
@@ -231,8 +221,6 @@ namespace DriverInstaller
 
             else if (e.ProgressPercentage == 5)
             {
-                //Show Result form
-
                 _ResultForm.ShowDialog(this);
                 _MainThread = false;
             }
@@ -280,7 +268,7 @@ namespace DriverInstaller
                 //Get device naem from _FilepathSel
                 _Floderpath = Path.GetFileName(Path.GetDirectoryName(_FilepathSel));
                 //Add select zip into Datagrid
-                row.Add(new object[] { _Floderpath, _FilepathSel, "Del" });
+                row.Add(new object[] { _Floderpath, _FilepathSel, null, "Del" });
                 _FilepathSel = text_FilePatSel.Text = null;
                 return;
             }

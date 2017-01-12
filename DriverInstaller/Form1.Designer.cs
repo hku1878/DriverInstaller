@@ -33,13 +33,14 @@
             this.btn_add = new System.Windows.Forms.Button();
             this.text_FilePatSel = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Item_Dev = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Item_Path = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Item_Del = new System.Windows.Forms.DataGridViewButtonColumn();
             this.btn_Start = new System.Windows.Forms.Button();
             this.pictureBox_processing = new System.Windows.Forms.PictureBox();
             this.label_ProcessStatus = new System.Windows.Forms.Label();
             this.label_List = new System.Windows.Forms.Label();
+            this.Item_Dev = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Item_Path = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.parameter = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Item_Del = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_processing)).BeginInit();
             this.SuspendLayout();
@@ -86,36 +87,19 @@
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToResizeColumns = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Item_Dev,
             this.Item_Path,
+            this.parameter,
             this.Item_Del});
             this.dataGridView1.Location = new System.Drawing.Point(9, 130);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.Size = new System.Drawing.Size(463, 150);
             this.dataGridView1.TabIndex = 3;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // Item_Dev
-            // 
-            this.Item_Dev.HeaderText = "Device";
-            this.Item_Dev.Name = "Item_Dev";
-            this.Item_Dev.ReadOnly = true;
-            // 
-            // Item_Path
-            // 
-            this.Item_Path.HeaderText = "Path";
-            this.Item_Path.Name = "Item_Path";
-            this.Item_Path.ReadOnly = true;
-            this.Item_Path.Width = 290;
-            // 
-            // Item_Del
-            // 
-            this.Item_Del.HeaderText = "Del";
-            this.Item_Del.Name = "Item_Del";
-            this.Item_Del.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Item_Del.Width = 30;
             // 
             // btn_Start
             // 
@@ -159,6 +143,42 @@
             this.label_List.TabIndex = 6;
             this.label_List.Text = "Selected List:";
             // 
+            // Item_Dev
+            // 
+            this.Item_Dev.HeaderText = "Device";
+            this.Item_Dev.MinimumWidth = 100;
+            this.Item_Dev.Name = "Item_Dev";
+            this.Item_Dev.ReadOnly = true;
+            this.Item_Dev.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Item_Dev.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Item_Path
+            // 
+            this.Item_Path.HeaderText = "Path";
+            this.Item_Path.MinimumWidth = 270;
+            this.Item_Path.Name = "Item_Path";
+            this.Item_Path.ReadOnly = true;
+            this.Item_Path.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Item_Path.Width = 270;
+            // 
+            // parameter
+            // 
+            this.parameter.HeaderText = "Parameter";
+            this.parameter.MinimumWidth = 30;
+            this.parameter.Name = "parameter";
+            this.parameter.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.parameter.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.parameter.Width = 60;
+            // 
+            // Item_Del
+            // 
+            this.Item_Del.HeaderText = "Del";
+            this.Item_Del.MinimumWidth = 30;
+            this.Item_Del.Name = "Item_Del";
+            this.Item_Del.ReadOnly = true;
+            this.Item_Del.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Item_Del.Width = 30;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -192,13 +212,14 @@
         private System.Windows.Forms.Button btn_add;
         private System.Windows.Forms.TextBox text_FilePatSel;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Item_Dev;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Item_Path;
-        private System.Windows.Forms.DataGridViewButtonColumn Item_Del;
         private System.Windows.Forms.Button btn_Start;
         private System.Windows.Forms.PictureBox pictureBox_processing;
         private System.Windows.Forms.Label label_ProcessStatus;
         private System.Windows.Forms.Label label_List;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Item_Dev;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Item_Path;
+        private System.Windows.Forms.DataGridViewTextBoxColumn parameter;
+        private System.Windows.Forms.DataGridViewButtonColumn Item_Del;
     }
 }
 
