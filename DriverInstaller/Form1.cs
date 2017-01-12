@@ -21,9 +21,13 @@ namespace DriverInstaller
         public DataTable dt;
         public string[] _StrFilter = { "wifi", "bt", "wlan", "bluetooth"};
         public BackgroundWorker backgroundWorker;
+        //Initia
+        Form2 _ResultForm = new Form2();
         public Form1()
         {
             InitializeComponent();
+            dataGridView1.Columns[0].SortMode = DataGridViewColumnSortMode.NotSortable;
+            dataGridView1.Columns[1].SortMode = DataGridViewColumnSortMode.NotSortable;
             //Create Data table
             dt = new DataTable("Driverlist");
             dt.Columns.Add("ItemNumber", typeof(Byte));
@@ -137,13 +141,8 @@ namespace DriverInstaller
         //Save result to report
         private void _SaveResult(string device, string status)
         {
-            Label[] lbl = new Label[3];
-
-                lbl[i] = new Label();
-                this.Controls.Add(lbl[i]);
-                lbl[i].Text = "■";
-                lbl[i].Location = new Point(n, 0);
-
+            Form2._CreateLabel(device, status);
+        }
 
         public void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -178,15 +177,27 @@ namespace DriverInstaller
                 backgroundWorker.ReportProgress(3);
                 while (_MainThread == true);
 
-                Process _installer = Process.Start(_InstallerExeFile);
-                _installer.WaitForExit();
-                _ReturnCode = _installer.ExitCode;
+                try
+                {
+                    Process _installer = Process.Start(_InstallerExeFile);
+                    _installer.WaitForExit();
+                    _ReturnCode = _installer.ExitCode;
+                }
+
+                catch (System.ComponentModel.Win32Exception)
+                {
+                    _ReturnCode = 1223;
+                }
+                
                 _InstallerExeFile = null;
                 _MainThread = true;
                 backgroundWorker.ReportProgress(4);
                 while (_MainThread == true);
             }
 
+            _MainThread = true;
+            backgroundWorker.ReportProgress(5);
+            while (_MainThread == true) ;
         }
 
         private void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -213,22 +224,37 @@ namespace DriverInstaller
 
             else if (e.ProgressPercentage == 4)
             {
-                _SaveResult(_ReturnCodeCheck(_ReturnCode), _DeviceName);
+                _SaveResult(_DeviceName, _ReturnCodeCheck(_ReturnCode));
                 dataGridView1.Rows.RemoveAt(0);
                 _MainThread = false;
             }
+
+            else if (e.ProgressPercentage == 5)
+            {
+                //Show Result form
+
+                _ResultForm.ShowDialog(this);
+                if (_ResultForm.DialogResult == System.Windows.Forms.DialogResult.OK)
+                {
+                    //若使用者在Form2按下了OK，則進入這個判斷式
+                    // textBox1.Text = "按下了" + _ResultForm.DialogResult.ToString();
+                }
+
+                else
+                {
+                    //若使用者在Form2按下了Cancel或者直接點選X關閉視窗，都會進入這個判斷式
+                    //textBox1.Text = "按下了" + _ResultForm.DialogResult.ToString();
+                }
+                _MainThread = false;
+            }
         }
-
-
-
+        
         void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             _BadUserDefander(false);
             _MainThread = true;
         }
-
-
-
+                
         //||==========================||
         //||==========================||
         //||------ Button Event ------||
@@ -276,9 +302,9 @@ namespace DriverInstaller
         //Start to install(Start Button)
         private void btn_Start_Click(object sender, EventArgs e)
         {
-                    backgroundWorker.WorkerReportsProgress = true;
-                    _MainThread = false;
-                    backgroundWorker.RunWorkerAsync();
+            backgroundWorker.WorkerReportsProgress = true;
+            _MainThread = false;
+            backgroundWorker.RunWorkerAsync();
         }
     }
 }
