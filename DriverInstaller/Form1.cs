@@ -234,17 +234,6 @@ namespace DriverInstaller
                 //Show Result form
 
                 _ResultForm.ShowDialog(this);
-                if (_ResultForm.DialogResult == System.Windows.Forms.DialogResult.OK)
-                {
-                    //若使用者在Form2按下了OK，則進入這個判斷式
-                    // textBox1.Text = "按下了" + _ResultForm.DialogResult.ToString();
-                }
-
-                else
-                {
-                    //若使用者在Form2按下了Cancel或者直接點選X關閉視窗，都會進入這個判斷式
-                    //textBox1.Text = "按下了" + _ResultForm.DialogResult.ToString();
-                }
                 _MainThread = false;
             }
         }
