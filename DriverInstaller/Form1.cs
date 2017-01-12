@@ -137,12 +137,8 @@ namespace DriverInstaller
         //Save result to report
         private void _SaveResult(string device, string status)
         {
-            Label[] lbl = new Label[3];
 
-                lbl[i] = new Label();
-                this.Controls.Add(lbl[i]);
-                lbl[i].Text = "■";
-                lbl[i].Location = new Point(n, 0);
+        }
 
 
         public void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
