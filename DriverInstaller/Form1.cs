@@ -16,7 +16,7 @@ namespace DriverInstaller
 
     public partial class Form1 : Form
     {
-        static string _FilepathSel, _Floderpath, _InstallerExeFile, _DeviceName, _ZipPath, _Unzipto = null;
+        static string _FilepathSel, _Floderpath, _InstallerExeFile, _Parameter, _ZipPath, _Unzipto = null;
         int _ReturnCode = 0;
         static bool _MainThread = true;
         public string[] _StrFilter = { "wifi", "bt", "wlan", "bluetooth", "intel", "nv", "nvidia"};
@@ -141,8 +141,8 @@ namespace DriverInstaller
             {
                 try
                 {
-                    _DeviceName = dataGridView1.Rows[0].Cells[0].Value.ToString();
                     _ZipPath = dataGridView1.Rows[0].Cells[1].Value.ToString();
+                    _Parameter = dataGridView1.Rows[0].Cells[2].Value.ToString();
                     _Unzipto = Path.GetDirectoryName(_ZipPath) + "\\" + Path.GetFileNameWithoutExtension(_ZipPath);
                 }
                 catch (ArgumentOutOfRangeException)
@@ -169,7 +169,7 @@ namespace DriverInstaller
 
                 try
                 {
-                    Process _installer = Process.Start(_InstallerExeFile);
+                    Process _installer = Process.Start(_InstallerExeFile, _Parameter);
                     _installer.WaitForExit();
                     _ReturnCode = _installer.ExitCode;
                 }
@@ -195,7 +195,7 @@ namespace DriverInstaller
             if (e.ProgressPercentage == 1)
             {
                 _BadUserDefander(true);
-                label_ProcessStatus.Text = "Unzipping " + _DeviceName + " driver";
+                label_ProcessStatus.Text = "Unzipping " + _Floderpath + " driver";
                 _MainThread = false;
             }
 
@@ -203,7 +203,7 @@ namespace DriverInstaller
             {
                 _GetInstallerPath(_Unzipto);
                 _MainThread = false;
-                label_ProcessStatus.Text = "Installing " + _DeviceName + " driver";
+                label_ProcessStatus.Text = "Installing " + _Floderpath + " driver";
             }
 
             else if (e.ProgressPercentage == 3)
@@ -214,7 +214,7 @@ namespace DriverInstaller
 
             else if (e.ProgressPercentage == 4)
             {
-                _SaveResult(_DeviceName, _ReturnCodeCheck(_ReturnCode));
+                _SaveResult(_Floderpath, _ReturnCodeCheck(_ReturnCode));
                 dataGridView1.Rows.RemoveAt(0);
                 _MainThread = false;
             }
@@ -268,7 +268,7 @@ namespace DriverInstaller
                 //Get device naem from _FilepathSel
                 _Floderpath = Path.GetFileName(Path.GetDirectoryName(_FilepathSel));
                 //Add select zip into Datagrid
-                row.Add(new object[] { _Floderpath, _FilepathSel, null, "Del" });
+                row.Add(new object[] { _Floderpath, _FilepathSel, "-s", "Del" });
                 _FilepathSel = text_FilePatSel.Text = null;
                 return;
             }

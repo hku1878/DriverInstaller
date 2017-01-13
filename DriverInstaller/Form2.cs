@@ -17,7 +17,7 @@ namespace DriverInstaller
         public Form2()
         {
             InitializeComponent();
-            panel1.Location = new System.Drawing.Point(13, 13);
+            panel1.Location = new Point(13, 13);
             panel1.Name = "panel1";
             panel1.Size = new System.Drawing.Size(259, 236);
             panel1.TabIndex = 0;
