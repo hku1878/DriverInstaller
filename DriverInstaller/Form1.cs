@@ -142,14 +142,20 @@ namespace DriverInstaller
                 try
                 {
                     _ZipPath = dataGridView1.Rows[0].Cells[1].Value.ToString();
-                    _Parameter = dataGridView1.Rows[0].Cells[2].Value.ToString();
                     _Unzipto = Path.GetDirectoryName(_ZipPath) + "\\" + Path.GetFileNameWithoutExtension(_ZipPath);
+                    _Parameter = dataGridView1.Rows[0].Cells[2].Value.ToString();
+                    
                 }
                 catch (ArgumentOutOfRangeException)
                 {
                     MessageBox.Show("The list is empty!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                catch(System.NullReferenceException)
+                {
+                    _Parameter = "";
+                }
+
                 _MainThread = true;
                 backgroundWorker.ReportProgress(1);
                 while (_MainThread == true);
