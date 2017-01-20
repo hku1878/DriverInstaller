@@ -12,24 +12,22 @@ namespace DriverInstaller
 
         }
 
+        private void dataGridView1_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            if (dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString() == "Sucess")
+            {
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+                row.DefaultCellStyle.BackColor = Color.Red;
+                if (row.Selected)
+                {
+                    row.DefaultCellStyle.SelectionForeColor = Color.Green;
+                }
+            }
+        }
+
         public void _CreateLabel(string DeviceName, string status)
         {
-            Label _Devicelabel = new Label();
-            _Devicelabel.Dock = DockStyle.Top;
-            _Devicelabel.Text = DeviceName + " driver installed ";
-            Label _Resultlabel = new Label();
-            _Resultlabel.Dock = DockStyle.Top;
-            _Resultlabel.Text = status;
-            if (status == "Sucess")
-            {
-                _Resultlabel.ForeColor = Color.Green;
-            }
-            else
-            {
-                _Resultlabel.ForeColor = Color.Red;
-            }
-            panel1.Controls.Add(_Devicelabel);
-            panel2.Controls.Add(_Resultlabel);
+            dataGridView1.Rows.Add(DeviceName+ " driver installed ", status);
         }
     }
 }

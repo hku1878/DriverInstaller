@@ -15,7 +15,7 @@ namespace DriverInstaller
         static string _FilepathSel, _Floderpath, _InstallerExeFile, _Parameter, _ZipPath, _Unzipto = null;
         int _ReturnCode = 0;
         static bool _MainThread = true;
-        public string[] _StrFilter = { "wifi", "bt", "wlan", "bluetooth", "intel", "nv", "nvidia"};
+        public string[] _StrFilter = { "wifi", "bt", "wlan", "bluetooth", "intel", "nv", "nvidia" };
         public BackgroundWorker backgroundWorker;
         Form2 _ResultForm = new Form2();
         public Form1()
@@ -26,7 +26,7 @@ namespace DriverInstaller
             backgroundWorker.ProgressChanged += backgroundWorker_ProgressChanged;
             backgroundWorker.RunWorkerCompleted += backgroundWorker_RunWorkerCompleted;
         }
-        
+
         //Get Zip File Path function
         private string _GetFilePath(string _FilterType, string _InitialDirectory)
         {
@@ -44,10 +44,10 @@ namespace DriverInstaller
                 dialog.Filter = "Installer files (*.exe; *.msi)| *.exe; *.msi";
                 dialog.InitialDirectory = _InitialDirectory;
             }
-                        
+
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-               return dialog.FileName;
+                return dialog.FileName;
             }
             return null;
         }
@@ -64,20 +64,20 @@ namespace DriverInstaller
                 ZipFile.ExtractToDirectory(source, destination);
                 return "Pass";
             }
-            
-            catch(System.IO.InvalidDataException)
+
+            catch (System.IO.InvalidDataException)
             {
-                MessageBox.Show(source +" Not able to unzip ", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(source + " Not able to unzip ", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return "Error";
             }
         }
 
         //Install driver via execution file
-        private void _GetInstallerPath (string _ExeLocation)
+        private void _GetInstallerPath(string _ExeLocation)
         {
             if (File.Exists(_ExeLocation + "\\setup.exe"))
             {
-                _InstallerExeFile = _ExeLocation+"\\setup.exe";              
+                _InstallerExeFile = _ExeLocation + "\\setup.exe";
             }
 
             else if (File.Exists(_ExeLocation + "\\install.exe"))
@@ -100,26 +100,20 @@ namespace DriverInstaller
         //Hide button and lab while working
         private void _BadUserDefander(bool _switch)
         {
-             btn_add.Visible = !_switch;
-             btn_sel.Visible = !_switch;
-             btn_Start.Visible = !_switch;
-             lab_ReadMe.Visible = !_switch;
-             text_FilePatSel.Visible = !_switch;
-             pictureBox_processing.Visible = _switch;
-             label_ProcessStatus.Visible = _switch;
-
-             foreach (DataGridViewRow row in dataGridView1.Rows)
-             {
-                // Set Enabled property of the fourth column in the DGV.
-                ((DataGridViewDisableButtonCell)row.Cells["Item_Del"]).Enabled = !_switch;
-             }
-            dataGridView1.Refresh();
+            btn_add.Visible = !_switch;
+            btn_sel.Visible = !_switch;
+            btn_Start.Visible = !_switch;
+            lab_ReadMe.Visible = !_switch;
+            text_FilePatSel.Visible = !_switch;
+            pictureBox_processing.Visible = _switch;
+            label_ProcessStatus.Visible = _switch;
+            SetDGVButtonColumnEnable(!_switch);
         }
 
         //Check Return Code
         private string _ReturnCodeCheck(int _ReturnCode)
         {
-            if (_ReturnCode ==0 || _ReturnCode == 3010)
+            if (_ReturnCode == 0 || _ReturnCode == 3010)
             {
                 return "Sucess";
             }
@@ -136,6 +130,17 @@ namespace DriverInstaller
             _ResultForm._CreateLabel(device, status);
         }
 
+        private void SetDGVButtonColumnEnable(bool enabled)
+        {
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                // Set Enabled property of the fourth column in the DGV.
+                ((DataGridViewDisableButtonCell)row.Cells[3]).Enabled = enabled;
+            }
+            dataGridView1.Refresh();
+        }
+
+        //BackgroundWorker
         public void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             backgroundWorker.ReportProgress(0);
@@ -154,14 +159,14 @@ namespace DriverInstaller
                     MessageBox.Show("The list is empty!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                catch(System.NullReferenceException)
+                catch (System.NullReferenceException)
                 {
                     _Parameter = "";
                 }
 
                 _MainThread = true;
                 backgroundWorker.ReportProgress(1);
-                while (_MainThread == true);
+                while (_MainThread == true) ;
 
                 //Stop installer if unzip failed
                 if (_UnzipFileTo(_ZipPath, _Unzipto) == "Error")
@@ -170,11 +175,11 @@ namespace DriverInstaller
                 }
                 _MainThread = true;
                 backgroundWorker.ReportProgress(2);
-                while (_MainThread == true);
+                while (_MainThread == true) ;
 
                 _MainThread = true;
                 backgroundWorker.ReportProgress(3);
-                while (_MainThread == true);
+                while (_MainThread == true) ;
 
                 try
                 {
@@ -187,11 +192,11 @@ namespace DriverInstaller
                 {
                     _ReturnCode = 1223;
                 }
-                
+
                 _InstallerExeFile = null;
                 _MainThread = true;
                 backgroundWorker.ReportProgress(4);
-                while (_MainThread == true);
+                while (_MainThread == true) ;
             }
 
             _MainThread = true;
@@ -234,13 +239,14 @@ namespace DriverInstaller
                 _MainThread = false;
             }
         }
-        
+
         void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             _BadUserDefander(false);
             _MainThread = true;
         }
-                
+
+
         //||==========================||
         //||==========================||
         //||------ Button Event ------||
@@ -257,7 +263,7 @@ namespace DriverInstaller
                 text_FilePatSel.Text = _FilepathSel;
             }
         }
-        
+
         //Delete driver in list(Datagrid Delete Button)
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -294,96 +300,104 @@ namespace DriverInstaller
         }
     }
 
-    public class DataGridViewDisableButtonCell : DataGridViewButtonCell
+    
+}
+public class DataGridViewDisableButtonColumn : DataGridViewButtonColumn
+{
+    public DataGridViewDisableButtonColumn()
     {
-        private bool enabledValue;
-        public bool Enabled
+        this.CellTemplate = new DataGridViewDisableButtonCell();
+    }
+}
+
+public class DataGridViewDisableButtonCell : DataGridViewButtonCell
+{
+    private bool enabledValue;
+    public bool Enabled
+    {
+        get
         {
-            get
+            return enabledValue;
+        }
+        set
+        {
+            enabledValue = value;
+        }
+    }
+
+    // Override the Clone method so that the Enabled property is copied.
+    public override object Clone()
+    {
+        DataGridViewDisableButtonCell cell = (DataGridViewDisableButtonCell)base.Clone();
+        cell.Enabled = this.Enabled;
+        return cell;
+    }
+
+    // By default, enable the button cell.
+    public DataGridViewDisableButtonCell()
+    {
+        this.enabledValue = true;
+    }
+
+    protected override void Paint(Graphics graphics,
+        Rectangle clipBounds, Rectangle cellBounds, int rowIndex,
+        DataGridViewElementStates elementState, object value,
+        object formattedValue, string errorText,
+        DataGridViewCellStyle cellStyle,
+        DataGridViewAdvancedBorderStyle advancedBorderStyle,
+        DataGridViewPaintParts paintParts)
+    {
+        // The button cell is disabled, so paint the border,  
+        // background, and disabled button for the cell.
+        if (!this.enabledValue)
+        {
+            // Draw the cell background, if specified.
+            if ((paintParts & DataGridViewPaintParts.Background) ==
+                DataGridViewPaintParts.Background)
             {
-                return enabledValue;
+                SolidBrush cellBackground =
+                    new SolidBrush(cellStyle.BackColor);
+                graphics.FillRectangle(cellBackground, cellBounds);
+                cellBackground.Dispose();
             }
-            set
+
+            // Draw the cell borders, if specified.
+            if ((paintParts & DataGridViewPaintParts.Border) ==
+                DataGridViewPaintParts.Border)
             {
-                enabledValue = value;
+                PaintBorder(graphics, clipBounds, cellBounds, cellStyle,
+                    advancedBorderStyle);
+            }
+
+            // Calculate the area in which to draw the button.
+            Rectangle buttonArea = cellBounds;
+            Rectangle buttonAdjustment =
+                this.BorderWidths(advancedBorderStyle);
+            buttonArea.X += buttonAdjustment.X;
+            buttonArea.Y += buttonAdjustment.Y;
+            buttonArea.Height -= buttonAdjustment.Height;
+            buttonArea.Width -= buttonAdjustment.Width;
+
+            // Draw the disabled button.                
+            ButtonRenderer.DrawButton(graphics, buttonArea,
+                PushButtonState.Disabled);
+
+            // Draw the disabled button text. 
+            if (this.FormattedValue is String)
+            {
+                TextRenderer.DrawText(graphics,
+                    (string)this.FormattedValue,
+                    this.DataGridView.Font,
+                    buttonArea, SystemColors.GrayText);
             }
         }
-
-        // Override the Clone method so that the Enabled property is copied.
-        public override object Clone()
+        else
         {
-            DataGridViewDisableButtonCell cell =
-                (DataGridViewDisableButtonCell)base.Clone();
-            cell.Enabled = this.Enabled;
-            return cell;
-        }
-
-        // By default, enable the button cell.
-        public DataGridViewDisableButtonCell()
-        {
-            this.enabledValue = true;
-        }
-
-        protected override void Paint(Graphics graphics,
-            Rectangle clipBounds, Rectangle cellBounds, int rowIndex,
-            DataGridViewElementStates elementState, object value,
-            object formattedValue, string errorText,
-            DataGridViewCellStyle cellStyle,
-            DataGridViewAdvancedBorderStyle advancedBorderStyle,
-            DataGridViewPaintParts paintParts)
-        {
-            // The button cell is disabled, so paint the border,  
-            // background, and disabled button for the cell.
-            if (!this.enabledValue)
-            {
-                // Draw the cell background, if specified.
-                if ((paintParts & DataGridViewPaintParts.Background) ==
-                    DataGridViewPaintParts.Background)
-                {
-                    SolidBrush cellBackground =
-                        new SolidBrush(cellStyle.BackColor);
-                    graphics.FillRectangle(cellBackground, cellBounds);
-                    cellBackground.Dispose();
-                }
-
-                // Draw the cell borders, if specified.
-                if ((paintParts & DataGridViewPaintParts.Border) ==
-                    DataGridViewPaintParts.Border)
-                {
-                    PaintBorder(graphics, clipBounds, cellBounds, cellStyle,
-                        advancedBorderStyle);
-                }
-
-                // Calculate the area in which to draw the button.
-                Rectangle buttonArea = cellBounds;
-                Rectangle buttonAdjustment =
-                    this.BorderWidths(advancedBorderStyle);
-                buttonArea.X += buttonAdjustment.X;
-                buttonArea.Y += buttonAdjustment.Y;
-                buttonArea.Height -= buttonAdjustment.Height;
-                buttonArea.Width -= buttonAdjustment.Width;
-
-                // Draw the disabled button.                
-                ButtonRenderer.DrawButton(graphics, buttonArea,
-                    PushButtonState.Disabled);
-
-                // Draw the disabled button text. 
-                if (this.FormattedValue is String)
-                {
-                    TextRenderer.DrawText(graphics,
-                        (string)this.FormattedValue,
-                        this.DataGridView.Font,
-                        buttonArea, SystemColors.GrayText);
-                }
-            }
-            else
-            {
-                // The button cell is enabled, so let the base class 
-                // handle the painting.
-                base.Paint(graphics, clipBounds, cellBounds, rowIndex,
-                    elementState, value, formattedValue, errorText,
-                    cellStyle, advancedBorderStyle, paintParts);
-            }
+            // The button cell is enabled, so let the base class 
+            // handle the painting.
+            base.Paint(graphics, clipBounds, cellBounds, rowIndex,
+                elementState, value, formattedValue, errorText,
+                cellStyle, advancedBorderStyle, paintParts);
         }
     }
 }

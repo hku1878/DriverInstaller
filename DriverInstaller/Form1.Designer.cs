@@ -37,10 +37,11 @@
             this.pictureBox_processing = new System.Windows.Forms.PictureBox();
             this.label_ProcessStatus = new System.Windows.Forms.Label();
             this.label_List = new System.Windows.Forms.Label();
+            this.dataGridViewDisableButtonColumn1 = new DataGridViewDisableButtonColumn();
             this.Item_Dev = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Item_Path = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.parameter = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Item_Del = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Item_Del = new DataGridViewDisableButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_processing)).BeginInit();
             this.SuspendLayout();
@@ -143,6 +144,15 @@
             this.label_List.TabIndex = 6;
             this.label_List.Text = "Selected List:";
             // 
+            // dataGridViewDisableButtonColumn1
+            // 
+            this.dataGridViewDisableButtonColumn1.HeaderText = "Del";
+            this.dataGridViewDisableButtonColumn1.MinimumWidth = 30;
+            this.dataGridViewDisableButtonColumn1.Name = "dataGridViewDisableButtonColumn1";
+            this.dataGridViewDisableButtonColumn1.ReadOnly = true;
+            this.dataGridViewDisableButtonColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewDisableButtonColumn1.Width = 30;
+            // 
             // Item_Dev
             // 
             this.Item_Dev.HeaderText = "Device";
@@ -219,7 +229,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Item_Dev;
         private System.Windows.Forms.DataGridViewTextBoxColumn Item_Path;
         private System.Windows.Forms.DataGridViewTextBoxColumn parameter;
-        private System.Windows.Forms.DataGridViewButtonColumn Item_Del;
+        private DataGridViewDisableButtonColumn Item_Del;
+        private DataGridViewDisableButtonColumn dataGridViewDisableButtonColumn1;
     }
 }
 
