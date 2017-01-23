@@ -1,4 +1,6 @@
-﻿namespace DriverInstaller
+﻿using System;
+
+namespace DriverInstaller
 {
     partial class Form2
     {
@@ -86,6 +88,10 @@
         }
 
         #endregion
+        private void Form2_Load(object sender, EventArgs e)
+        {
+
+        }
 
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn _Device;
