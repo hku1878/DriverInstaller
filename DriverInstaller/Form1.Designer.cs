@@ -28,20 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.lab_ReadMe = new System.Windows.Forms.Label();
             this.btn_sel = new System.Windows.Forms.Button();
             this.btn_add = new System.Windows.Forms.Button();
             this.text_FilePatSel = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Item_Dev = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Item_Path = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.parameter = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Item_Del = new DataGridViewDisableButtonColumn();
             this.btn_Start = new System.Windows.Forms.Button();
             this.pictureBox_processing = new System.Windows.Forms.PictureBox();
             this.label_ProcessStatus = new System.Windows.Forms.Label();
             this.label_List = new System.Windows.Forms.Label();
             this.dataGridViewDisableButtonColumn1 = new DataGridViewDisableButtonColumn();
-            this.Item_Dev = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Item_Path = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.parameter = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Item_Del = new DataGridViewDisableButtonColumn();
+            this.chkBox1_DefPar = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_processing)).BeginInit();
             this.SuspendLayout();
@@ -102,6 +104,42 @@
             this.dataGridView1.TabIndex = 3;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
+            // Item_Dev
+            // 
+            this.Item_Dev.HeaderText = "Device";
+            this.Item_Dev.MinimumWidth = 100;
+            this.Item_Dev.Name = "Item_Dev";
+            this.Item_Dev.ReadOnly = true;
+            this.Item_Dev.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Item_Dev.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Item_Path
+            // 
+            this.Item_Path.HeaderText = "Path";
+            this.Item_Path.MinimumWidth = 270;
+            this.Item_Path.Name = "Item_Path";
+            this.Item_Path.ReadOnly = true;
+            this.Item_Path.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Item_Path.Width = 270;
+            // 
+            // parameter
+            // 
+            this.parameter.HeaderText = "Parameter";
+            this.parameter.MinimumWidth = 30;
+            this.parameter.Name = "parameter";
+            this.parameter.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.parameter.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.parameter.Width = 60;
+            // 
+            // Item_Del
+            // 
+            this.Item_Del.HeaderText = "Del";
+            this.Item_Del.MinimumWidth = 30;
+            this.Item_Del.Name = "Item_Del";
+            this.Item_Del.ReadOnly = true;
+            this.Item_Del.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Item_Del.Width = 30;
+            // 
             // btn_Start
             // 
             this.btn_Start.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -153,41 +191,15 @@
             this.dataGridViewDisableButtonColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewDisableButtonColumn1.Width = 30;
             // 
-            // Item_Dev
+            // chkBox1_DefPar
             // 
-            this.Item_Dev.HeaderText = "Device";
-            this.Item_Dev.MinimumWidth = 100;
-            this.Item_Dev.Name = "Item_Dev";
-            this.Item_Dev.ReadOnly = true;
-            this.Item_Dev.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Item_Dev.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Item_Path
-            // 
-            this.Item_Path.HeaderText = "Path";
-            this.Item_Path.MinimumWidth = 270;
-            this.Item_Path.Name = "Item_Path";
-            this.Item_Path.ReadOnly = true;
-            this.Item_Path.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Item_Path.Width = 270;
-            // 
-            // parameter
-            // 
-            this.parameter.HeaderText = "Parameter";
-            this.parameter.MinimumWidth = 30;
-            this.parameter.Name = "parameter";
-            this.parameter.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.parameter.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.parameter.Width = 60;
-            // 
-            // Item_Del
-            // 
-            this.Item_Del.HeaderText = "Del";
-            this.Item_Del.MinimumWidth = 30;
-            this.Item_Del.Name = "Item_Del";
-            this.Item_Del.ReadOnly = true;
-            this.Item_Del.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Item_Del.Width = 30;
+            this.chkBox1_DefPar.AutoSize = true;
+            this.chkBox1_DefPar.Location = new System.Drawing.Point(285, 105);
+            this.chkBox1_DefPar.Name = "chkBox1_DefPar";
+            this.chkBox1_DefPar.Size = new System.Drawing.Size(187, 17);
+            this.chkBox1_DefPar.TabIndex = 7;
+            this.chkBox1_DefPar.Text = "Default silent install parameter \"-s\"";
+            this.chkBox1_DefPar.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -195,6 +207,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(481, 312);
+            this.Controls.Add(this.chkBox1_DefPar);
             this.Controls.Add(this.label_List);
             this.Controls.Add(this.label_ProcessStatus);
             this.Controls.Add(this.pictureBox_processing);
@@ -204,10 +217,12 @@
             this.Controls.Add(this.btn_add);
             this.Controls.Add(this.btn_sel);
             this.Controls.Add(this.lab_ReadMe);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(497, 351);
             this.MinimumSize = new System.Drawing.Size(497, 351);
             this.Name = "Form1";
             this.Text = "Driver Installer";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_processing)).EndInit();
             this.ResumeLayout(false);
@@ -231,6 +246,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn parameter;
         private DataGridViewDisableButtonColumn Item_Del;
         private DataGridViewDisableButtonColumn dataGridViewDisableButtonColumn1;
+        private System.Windows.Forms.CheckBox chkBox1_DefPar;
     }
 }
 

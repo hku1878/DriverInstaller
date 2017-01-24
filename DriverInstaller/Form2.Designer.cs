@@ -30,6 +30,7 @@ namespace DriverInstaller
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this._Device = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this._Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,7 +53,7 @@ namespace DriverInstaller
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridView1.Size = new System.Drawing.Size(359, 36);
+            this.dataGridView1.Size = new System.Drawing.Size(359, 22);
             this.dataGridView1.TabIndex = 0;
             // 
             // _Device
@@ -61,6 +62,7 @@ namespace DriverInstaller
             this._Device.FillWeight = 121.8274F;
             this._Device.HeaderText = "Device";
             this._Device.Name = "_Device";
+            this._Device.ReadOnly = true;
             // 
             // _Status
             // 
@@ -68,6 +70,7 @@ namespace DriverInstaller
             this._Status.FillWeight = 78.17259F;
             this._Status.HeaderText = "Status";
             this._Status.Name = "_Status";
+            this._Status.ReadOnly = true;
             // 
             // Form2
             // 
@@ -76,8 +79,9 @@ namespace DriverInstaller
             this.AutoScroll = true;
             this.AutoSize = true;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
-            this.ClientSize = new System.Drawing.Size(359, 36);
+            this.ClientSize = new System.Drawing.Size(359, 22);
             this.Controls.Add(this.dataGridView1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form2";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Result";

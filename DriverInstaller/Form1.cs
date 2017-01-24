@@ -87,13 +87,13 @@ namespace DriverInstaller
 
             else
             {
-                do
+                MessageBox.Show("Cannot find installer, please select one", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _InstallerExeFile = _GetFilePath("exe", _Unzipto);
+                if (_InstallerExeFile == null)
                 {
-                    _InstallerExeFile = _GetFilePath("exe", _Unzipto);
-                    if (_InstallerExeFile == null)
-                        MessageBox.Show("Please select Installer!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                while (_InstallerExeFile == null);
+                    MessageBox.Show("No installer, install failed!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //_ReturnCode = 2000;
+                }        
             }
         }
 
@@ -108,6 +108,7 @@ namespace DriverInstaller
             pictureBox_processing.Visible = _switch;
             label_ProcessStatus.Visible = _switch;
             SetDGVButtonColumnEnable(!_switch);
+            chkBox1_DefPar.Visible = !_switch;
         }
 
         //Check Return Code
@@ -181,16 +182,22 @@ namespace DriverInstaller
                 backgroundWorker.ReportProgress(3);
                 while (_MainThread == true) ;
 
-                try
+                if(_InstallerExeFile == null)
                 {
-                    Process _installer = Process.Start(_InstallerExeFile, _Parameter);
-                    _installer.WaitForExit();
-                    _ReturnCode = _installer.ExitCode;
+                    _ReturnCode = 2000;
                 }
-
-                catch (System.ComponentModel.Win32Exception)
+                else
                 {
-                    _ReturnCode = 1223;
+                    try
+                    {
+                        Process _installer = Process.Start(_InstallerExeFile, _Parameter);
+                        _installer.WaitForExit();
+                        _ReturnCode = _installer.ExitCode;
+                    }
+                    catch (System.ComponentModel.Win32Exception)
+                    {
+                        _ReturnCode = 1223;
+                    }
                 }
 
                 _InstallerExeFile = null;
@@ -240,6 +247,11 @@ namespace DriverInstaller
             }
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
         void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             _BadUserDefander(false);
@@ -283,7 +295,15 @@ namespace DriverInstaller
                 //Get device naem from _FilepathSel
                 _Floderpath = (Path.GetFileName(Path.GetDirectoryName(_FilepathSel))).ToUpper();
                 //Add select zip into Datagrid
-                row.Add(new object[] { _Floderpath, _FilepathSel, "-s", "Del" });
+                if (chkBox1_DefPar.Checked == true)
+                {
+                    row.Add(new object[] { _Floderpath, _FilepathSel, "-s", "Del" });
+                }
+                else
+                {
+                    row.Add(new object[] { _Floderpath, _FilepathSel, null, "Del" });
+                }
+                
                 _FilepathSel = text_FilePatSel.Text = null;
                 return;
             }
