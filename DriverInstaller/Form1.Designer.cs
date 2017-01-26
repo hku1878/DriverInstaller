@@ -221,7 +221,7 @@
             this.MaximumSize = new System.Drawing.Size(497, 351);
             this.MinimumSize = new System.Drawing.Size(497, 351);
             this.Name = "Form1";
-            this.Text = "Driver Installer";
+            this.Text = "Driver Installer 1.00 by Kuanyu";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_processing)).EndInit();

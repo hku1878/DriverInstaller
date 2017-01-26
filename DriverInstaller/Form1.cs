@@ -21,6 +21,8 @@ namespace DriverInstaller
         public Form1()
         {
             InitializeComponent();
+            this.AutoScaleBaseSize = new Size(200, 150);
+
             backgroundWorker = new BackgroundWorker();
             backgroundWorker.DoWork += backgroundWorker_DoWork;
             backgroundWorker.ProgressChanged += backgroundWorker_ProgressChanged;
@@ -75,6 +77,7 @@ namespace DriverInstaller
         //Install driver via execution file
         private void _GetInstallerPath(string _ExeLocation)
         {
+            DirectoryInfo _Driverdir = new DirectoryInfo(@_ExeLocation);
             if (File.Exists(_ExeLocation + "\\setup.exe"))
             {
                 _InstallerExeFile = _ExeLocation + "\\setup.exe";
@@ -85,9 +88,14 @@ namespace DriverInstaller
                 _InstallerExeFile = _ExeLocation + "\\install.exe";
             }
 
+            else if (_Driverdir.GetFiles("*.exe").Length == 1)
+            {
+                _InstallerExeFile = _ExeLocation + "\\" + _Driverdir.GetFiles("*.exe")[0].Name;
+                Debug.WriteLine("_InstallerExeFile = " + _InstallerExeFile);
+            }
             else
             {
-                MessageBox.Show("Cannot find installer, please select one", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("More than one exe in directory, please select one", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 _InstallerExeFile = _GetFilePath("exe", _Unzipto);
                 if (_InstallerExeFile == null)
                 {
@@ -314,9 +322,16 @@ namespace DriverInstaller
         //Start to install(Start Button)
         private void btn_Start_Click(object sender, EventArgs e)
         {
-            backgroundWorker.WorkerReportsProgress = true;
-            _MainThread = false;
-            backgroundWorker.RunWorkerAsync();
+            if(dataGridView1.Rows.Count != 0)
+            {
+                backgroundWorker.WorkerReportsProgress = true;
+                _MainThread = false;
+                backgroundWorker.RunWorkerAsync();
+            }
+            else
+            {
+                MessageBox.Show("The list is empty!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 
