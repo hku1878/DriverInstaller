@@ -223,6 +223,7 @@ namespace DriverInstaller
         {
             if (e.ProgressPercentage == 1)
             {
+                pictureBox_processing.Location = new Point(this.Width / 2 - pictureBox_processing.Width / 2, pictureBox_processing.Location.Y);
                 _BadUserDefander(true);
                 label_ProcessStatus.Text = "Unzipping " + _Floderpath + " driver";
                 _MainThread = false;
