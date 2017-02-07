@@ -1,4 +1,6 @@
-﻿namespace DriverInstaller
+﻿using DriverInstaller.Functions;
+
+namespace DriverInstaller
 {
     partial class Form1
     {
@@ -35,7 +37,7 @@
             this.Item_Dev = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Item_Path = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.parameter = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Del = new DataGridViewDisableButtonColumn();
+            this.Del = new DriverInstaller.Functions.DataGridViewDisableButtonColumn();
             this.label_List = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
@@ -50,11 +52,10 @@
             this.lab_ReadMe = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.dataGridViewDisableButtonColumn1 = new DataGridViewDisableButtonColumn();
+            this.dataGridViewDisableButtonColumn1 = new DriverInstaller.Functions.DataGridViewDisableButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_processing)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel10.SuspendLayout();
@@ -100,7 +101,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(10, 134);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(559, 141);
+            this.dataGridView1.Size = new System.Drawing.Size(533, 145);
             this.dataGridView1.TabIndex = 20;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -156,7 +157,7 @@
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel10.Location = new System.Drawing.Point(10, 113);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(559, 21);
+            this.panel10.Size = new System.Drawing.Size(533, 21);
             this.panel10.TabIndex = 19;
             // 
             // panel9
@@ -166,7 +167,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel9.Location = new System.Drawing.Point(10, 93);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(559, 20);
+            this.panel9.Size = new System.Drawing.Size(533, 20);
             this.panel9.TabIndex = 12;
             // 
             // label_ProcessStatus
@@ -175,7 +176,7 @@
             this.label_ProcessStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_ProcessStatus.Location = new System.Drawing.Point(0, 0);
             this.label_ProcessStatus.Name = "label_ProcessStatus";
-            this.label_ProcessStatus.Size = new System.Drawing.Size(339, 20);
+            this.label_ProcessStatus.Size = new System.Drawing.Size(370, 20);
             this.label_ProcessStatus.TabIndex = 6;
             this.label_ProcessStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label_ProcessStatus.Visible = false;
@@ -185,21 +186,21 @@
             this.chkBox1_DefPar.AutoSize = true;
             this.chkBox1_DefPar.Dock = System.Windows.Forms.DockStyle.Right;
             this.chkBox1_DefPar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkBox1_DefPar.Location = new System.Drawing.Point(339, 0);
+            this.chkBox1_DefPar.Location = new System.Drawing.Point(370, 0);
             this.chkBox1_DefPar.Name = "chkBox1_DefPar";
-            this.chkBox1_DefPar.Size = new System.Drawing.Size(220, 20);
+            this.chkBox1_DefPar.Size = new System.Drawing.Size(163, 20);
             this.chkBox1_DefPar.TabIndex = 0;
-            this.chkBox1_DefPar.Text = "Set silent install parameter \"-s\"";
+            this.chkBox1_DefPar.Text = "Set parameter to \"-s\".";
             this.chkBox1_DefPar.UseVisualStyleBackColor = true;
             // 
             // btn_Start
             // 
             this.btn_Start.Dock = System.Windows.Forms.DockStyle.Right;
             this.btn_Start.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Start.Location = new System.Drawing.Point(484, 0);
+            this.btn_Start.Location = new System.Drawing.Point(458, 5);
             this.btn_Start.Margin = new System.Windows.Forms.Padding(10);
             this.btn_Start.Name = "btn_Start";
-            this.btn_Start.Size = new System.Drawing.Size(75, 27);
+            this.btn_Start.Size = new System.Drawing.Size(75, 23);
             this.btn_Start.TabIndex = 0;
             this.btn_Start.Text = "Start";
             this.btn_Start.UseVisualStyleBackColor = true;
@@ -209,16 +210,17 @@
             // 
             this.panel8.Controls.Add(this.btn_Start);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel8.Location = new System.Drawing.Point(10, 275);
+            this.panel8.Location = new System.Drawing.Point(10, 279);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(559, 27);
+            this.panel8.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            this.panel8.Size = new System.Drawing.Size(533, 33);
             this.panel8.TabIndex = 18;
             // 
             // btn_sel
             // 
             this.btn_sel.Dock = System.Windows.Forms.DockStyle.Right;
             this.btn_sel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_sel.Location = new System.Drawing.Point(409, 5);
+            this.btn_sel.Location = new System.Drawing.Point(383, 5);
             this.btn_sel.Margin = new System.Windows.Forms.Padding(10);
             this.btn_sel.Name = "btn_sel";
             this.btn_sel.Size = new System.Drawing.Size(75, 25);
@@ -231,7 +233,7 @@
             // 
             this.btn_add.Dock = System.Windows.Forms.DockStyle.Right;
             this.btn_add.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_add.Location = new System.Drawing.Point(484, 5);
+            this.btn_add.Location = new System.Drawing.Point(458, 5);
             this.btn_add.Margin = new System.Windows.Forms.Padding(0);
             this.btn_add.Name = "btn_add";
             this.btn_add.Size = new System.Drawing.Size(75, 25);
@@ -246,7 +248,7 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel6.Location = new System.Drawing.Point(10, 71);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(559, 22);
+            this.panel6.Size = new System.Drawing.Size(533, 22);
             this.panel6.TabIndex = 16;
             // 
             // text_FilePatSel
@@ -254,7 +256,7 @@
             this.text_FilePatSel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.text_FilePatSel.Location = new System.Drawing.Point(0, 0);
             this.text_FilePatSel.Name = "text_FilePatSel";
-            this.text_FilePatSel.Size = new System.Drawing.Size(559, 20);
+            this.text_FilePatSel.Size = new System.Drawing.Size(533, 20);
             this.text_FilePatSel.TabIndex = 1;
             // 
             // lab_ReadMe
@@ -276,7 +278,7 @@
             this.panel7.Location = new System.Drawing.Point(10, 36);
             this.panel7.Name = "panel7";
             this.panel7.Padding = new System.Windows.Forms.Padding(5, 5, 0, 5);
-            this.panel7.Size = new System.Drawing.Size(559, 35);
+            this.panel7.Size = new System.Drawing.Size(533, 35);
             this.panel7.TabIndex = 17;
             // 
             // panel5
@@ -285,29 +287,21 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(10, 10);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(559, 26);
+            this.panel5.Size = new System.Drawing.Size(533, 26);
             this.panel5.TabIndex = 15;
-            // 
-            // panel4
-            // 
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(10, 302);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(559, 10);
-            this.panel4.TabIndex = 14;
             // 
             // panel3
             // 
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(10, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(559, 10);
+            this.panel3.Size = new System.Drawing.Size(533, 10);
             this.panel3.TabIndex = 13;
             // 
             // panel2
             // 
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(569, 0);
+            this.panel2.Location = new System.Drawing.Point(543, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(10, 312);
             this.panel2.TabIndex = 11;
@@ -330,7 +324,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(579, 312);
+            this.ClientSize = new System.Drawing.Size(553, 312);
             this.Controls.Add(this.pictureBox_processing);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.panel10);
@@ -339,12 +333,11 @@
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.panel7);
             this.Controls.Add(this.panel5);
-            this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(497, 351);
+            this.MinimumSize = new System.Drawing.Size(569, 351);
             this.Name = "Form1";
             this.Text = "Driver Installer 1.10 by Kuanyu";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -382,7 +375,6 @@
         private System.Windows.Forms.Label lab_ReadMe;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel1;
