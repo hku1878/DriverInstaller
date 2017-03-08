@@ -95,7 +95,7 @@ namespace DriverInstaller
             }
             else
             {
-                MessageBox.Show("More than one exe in directory, please select one", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Didn't find Setup.exe or install.exe, please select manully", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 _InstallerExeFile = _GetFilePath("exe", _Unzipto);
                 if (_InstallerExeFile == null)
                 {
@@ -117,6 +117,17 @@ namespace DriverInstaller
             label_ProcessStatus.Visible = _switch;
             SetDGVButtonColumnEnable(!_switch);
             chkBox1_DefPar.Visible = !_switch;
+            MaximizeBox = !_switch;
+            if(_switch == true)
+            {
+                FormBorderStyle = FormBorderStyle.Fixed3D;
+            }
+
+            else
+            {
+                FormBorderStyle = FormBorderStyle.Sizable;
+            }
+
         }
 
         //Check Return Code
@@ -223,7 +234,7 @@ namespace DriverInstaller
         {
             if (e.ProgressPercentage == 1)
             {
-                pictureBox_processing.Location = new Point(this.Width / 2 - pictureBox_processing.Width / 2, pictureBox_processing.Location.Y);
+                pictureBox_processing.Location = new Point(Width / 2 - pictureBox_processing.Width / 2, pictureBox_processing.Location.Y);
                 _BadUserDefander(true);
                 label_ProcessStatus.Text = "Unzipping " + _Floderpath + " driver";
                 _MainThread = false;

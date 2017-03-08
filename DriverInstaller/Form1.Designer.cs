@@ -339,7 +339,7 @@ namespace DriverInstaller
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(569, 351);
             this.Name = "Form1";
-            this.Text = "Driver Installer 1.10 by Kuanyu";
+            this.Text = "Driver Installer 1.11 by Kuanyu";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_processing)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
